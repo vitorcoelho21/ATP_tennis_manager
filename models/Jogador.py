@@ -23,7 +23,7 @@ class Jogador(Pessoa, Competidor):
         self.__ranking = 999
         self.__vitorias = 0
         self.__derrotas = 0
-        self.__titulos = 0
+        self.__titulos = {}
 
         # ATRIBUTOS DE JOGO
 
@@ -103,6 +103,13 @@ class Jogador(Pessoa, Competidor):
 
         if self.__fisico < 0:
             self.__fisico = 0
+    
+    def adicionar_titulo(self, torneio):
+
+        if torneio in self.__titulos:
+            self.__titulos[torneio] += 1
+        else:
+            self.__titulos[torneio] = 1
 
     def ganhar_pontos(self, pontos):
 
@@ -159,6 +166,16 @@ class Jogador(Pessoa, Competidor):
             f"Stamina atual: {self.__stamina}\n"
             f"Fisico atual: {self.__fisico}\n"
         )
+    
+    def mostrar_titulos(self):
+    
+        if not self.__titulos:
+            return f"{self.nome} ainda não conquistou títulos."
+
+        titulos_str = f"\n===== TÍTULOS DE {self.nome.upper()} =====\n"
+        for torneio, quantidade in self.__titulos.items():
+            titulos_str += f"{torneio}: {quantidade} título(s)\n"
+        return titulos_str  
 
     def mostrar_info(self):
 

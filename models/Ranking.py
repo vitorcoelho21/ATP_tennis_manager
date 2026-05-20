@@ -15,13 +15,12 @@ class Ranking:
             self.__jogadores.remove(jogador)
     
     def atualizar_ranking(self):
-        
-        def pegar_pontos(self, jogador):
-            if jogador in self.__jogadores:
-                return jogador.pontos
-        self.__jogadores.sort(key=pegar_pontos, reverse=True)
+        self.__jogadores.sort(key=self.pegar_pontos, reverse=True)
         for i, jogador in enumerate(self.__jogadores, start=1):
             jogador.ranking = i
+    def pegar_pontos(self, jogador):
+        if jogador in self.__jogadores:
+            return jogador.pontos
 
     def mostrar_ranking(self):
         if not self.__jogadores:

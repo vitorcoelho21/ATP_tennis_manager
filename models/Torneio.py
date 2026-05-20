@@ -24,17 +24,36 @@ class Torneio:
             raise ValueError("Jogador já está inscrito no torneio.")
         self.__jogadores.append(jogador)
 
-    def gerar_chave(self):
-        if len(self.__jogadores) < 2:
+    def gerar_chave(self, competidores):
+        if len(competidores) < 2:
             raise ValueError("É necessário pelo menos 2 jogadores para gerar a chave.")
-        elif len(self.__jogadores) % 2 != 0:
+        elif len(competidores) % 2 != 0:
             raise ValueError("Número de jogadores deve ser par para gerar a chave.")
-        jogadores_embaralhados = self.__jogadores.copy()
+        jogadores_embaralhados = competidores.copy()
+        partidas_rodada = []
         random.shuffle(jogadores_embaralhados)
         for i in range(0, len(jogadores_embaralhados), 2):
             jogador1 = jogadores_embaralhados[i]
             jogador2 = jogadores_embaralhados[i + 1]
             partida = Partida(jogador1, jogador2, self.superficie)
             self.__partidas.append(partida)
-
+            partidas_rodada.append(partida)
+        return partidas_rodada
     
+    def iniciar_torneio(self):
+        partida_rodada = self.gerar_chave(self.__jogadores)
+        vencedores = []
+        for partida in partida_rodada:
+            partida.simular()
+            vencedores.append(partida.vencedor)
+        
+        while len(vencedores) > 1:
+            partida_rodada = self.gerar_chave(vencedores)
+            vencedores = []
+            for partida in partida_rodada:
+                partida.simular()
+                vencedores.append(partida.vencedor)
+        self.campeao = vencedores[0]
+        self.campeao.adicionar_titulo(self.nome)
+        self.campeao.ganhar_pontos(self.categoria.pontos)
+        print(f"\nO campeão do {self.nome} é {self.campeao.nome}!")
