@@ -25,6 +25,15 @@ class MenuPrincipal:
             elif escolha == "0":
                 print("Saindo do sistema...")
                 break
+            elif escolha == "teste":
+                self.sistema_atp.gerar_jogadores_teste()
+                print("Jogadores de teste gerados.")
+            elif escolha == "torneios":
+                self.sistema_atp.gerar_torneios_teste()
+                print("Torneios de teste gerados.")
+            elif escolha == "temporada":
+                self.sistema_atp.gerar_temporada_teste()
+                print("Temporada de teste gerada.")
             else:
                 print("Opção inválida. Tente novamente.")
 

@@ -1,5 +1,9 @@
+import random
+
+from models.Torneio import Torneio
 from models.Jogador import Jogador
 from models.Ranking import Ranking
+from utils.enums import CategoriaTorneio, Superficie
 
 class SistemaAtp:
     def __init__(self):
@@ -21,4 +25,45 @@ class SistemaAtp:
     def get_ranking_geral(self):
         self.ranking.atualizar_ranking()
         return self.ranking.mostrar_ranking()
+    
+    def gerar_jogadores_teste(self):
+        nomes = [
+            "Djokovic", "Alcaraz", "Sinner", "Medvedev",
+            "Zverev", "Rune", "Rublev", "Tsitsipas"
+        ]
+
+        for nome in nomes:
+            self.cadastrar_jogador(
+                nome,
+                random.randint(18, 38),
+                "Teste",
+                random.randint(70, 100),
+                random.randint(70, 100),
+                random.randint(70, 100)
+            )
+    
+    def gerar_torneios_teste(self):
+        torneios = [
+            ("Australian Open", CategoriaTorneio.GRAND_SLAM, Superficie.HARD),
+            ("Roland Garros", CategoriaTorneio.GRAND_SLAM, Superficie.SAIBRO),
+            ("Wimbledon", CategoriaTorneio.GRAND_SLAM, Superficie.GRAMA),
+            ("US Open", CategoriaTorneio.GRAND_SLAM, Superficie.HARD),
+            ("Indian Wells", CategoriaTorneio.MASTERS_1000, Superficie.HARD),
+            ("Monte Carlo", CategoriaTorneio.MASTERS_1000, Superficie.SAIBRO),
+            ("Queen's", CategoriaTorneio.ATP_500, Superficie.GRAMA),
+            ("Doha", CategoriaTorneio.ATP_250, Superficie.HARD)
+        ]
+
+        for nome, categoria, superficie in torneios:
+            self.torneios.append(
+                Torneio(nome, categoria, superficie)
+            )
+
+    def gerar_temporada_teste(self):
+        self.gerar_jogadores_teste()
+        self.gerar_torneios_teste()
+
+        for torneio in self.torneios:
+            for jogador in self.jogadores:
+                torneio.adicionar_jogador(jogador)
         

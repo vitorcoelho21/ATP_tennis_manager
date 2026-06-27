@@ -33,7 +33,6 @@ class MenuRanking:
             print(f"\n===== RANKING DE {jogador.nome.upper()} =====")
             print(f"Ranking: {jogador.ranking}")
             print(f"Pontos: {jogador.pontos}")
-            print(f"Titulos: {jogador.mostrar_titulos()}")
         else:
             print("Jogador não encontrado.")
         

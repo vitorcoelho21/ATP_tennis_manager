@@ -32,7 +32,7 @@ class Partida:
         fisico = jogador.fisico
         stamina = jogador.stamina
         aleatorio = random.uniform(-5, 5)  # Introduz uma variação aleatória
-        return habilidade * 0.5 + fisico * 0.3 + stamina * 0.2 + aleatorio
+        return max(1, habilidade * 0.5 + fisico * 0.3 + stamina * 0.2 + aleatorio)
     
     def simular_game(self):
         forca_jogador1 = self.calcular_forca(self.jogador1)
@@ -119,11 +119,10 @@ class Partida:
     
     def atualizar_estatisticas(self, qtd_games, qtd_sets):
         self._vencedor.adicionar_vitoria()
-        self._vencedor.ganhar_pontos(100)
         self._vencedor.historico.append(self)
         self._perdedor.adicionar_derrota()
         self._perdedor.historico.append(self)
-        desgaste = qtd_games // 2
+        desgaste = qtd_games // 3
         if qtd_sets == 3:
             desgaste += 5
         elif qtd_sets == 2:
