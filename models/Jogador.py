@@ -1,7 +1,7 @@
 from utils.enums import Superficie
 from .Pessoa import Pessoa
 from .Competidor import Competidor
-
+import random
 
 class Jogador(Pessoa, Competidor):
 
@@ -16,7 +16,8 @@ class Jogador(Pessoa, Competidor):
     ):
 
         super().__init__(nome, idade, nacionalidade)
-
+        self.__id = None  # ID do jogador no banco de dados, será atribuído ao salvar no banco
+        
         # ESTATÍSTICAS
 
         self.__pontos = 0
@@ -28,7 +29,7 @@ class Jogador(Pessoa, Competidor):
         # ATRIBUTOS DE JOGO
 
         self.__stamina = 100
-        self.__fisico = 70
+        self.__fisico = random.randint(60, 99)
 
         self.habilidades = {
             Superficie.SAIBRO: habilidade_saibro,
@@ -42,6 +43,10 @@ class Jogador(Pessoa, Competidor):
 
     # GETTERS
 
+    @property
+    def id(self):
+        return self.__id
+    
     @property
     def pontos(self):
         return self.__pontos
@@ -80,6 +85,10 @@ class Jogador(Pessoa, Competidor):
 
     # SETTERS
 
+    @id.setter
+    def id(self, novo_id):
+        self.__id = novo_id
+        
     @ranking.setter
     def ranking(self, novo_ranking):
 
@@ -93,6 +102,31 @@ class Jogador(Pessoa, Competidor):
         if valor < 0:
             raise ValueError("Pontos inválidos.")
         self.__pontos = valor
+
+    @vitorias.setter
+    def vitorias(self, valor):
+        if valor < 0:
+            raise ValueError("Vitórias inválidas.")
+        self.__vitorias = valor
+
+    @derrotas.setter
+    def derrotas(self, valor):
+        if valor < 0:
+            raise ValueError("Derrotas inválidas.")
+        self.__derrotas = valor
+
+    @stamina.setter
+    def stamina(self, valor):
+        if valor < 0 or valor > 100:
+            raise ValueError("Stamina inválida.")
+        self.__stamina = valor
+
+    @fisico.setter
+    def fisico(self, valor):
+        if valor < 0 or valor > 100:
+            raise ValueError("Físico inválido.")
+        self.__fisico = valor
+
     # MÉTODOS
 
     def adicionar_vitoria(self):
